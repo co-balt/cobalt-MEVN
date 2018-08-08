@@ -1,0 +1,7 @@
+version: '3'
+services:
+  dev:
+    build: dev/.
+    image: cobalt-mevn/dev
+    volumes:
+      - ../app/mevn:/app    

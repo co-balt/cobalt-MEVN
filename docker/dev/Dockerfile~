@@ -1,0 +1,24 @@
+FROM ubuntu:xenial
+
+# installing linux utilities
+RUN apt update \
+  && apt -y install build-essential git wget inotify-tools curl man
+RUN apt update
+
+# installing node 10.x
+RUN curl -sL https://deb.nodesource.com/setup_10.x -o node_setup_10.x
+RUN chmod +x node_setup_10.x
+RUN ./node_setup_10.x
+RUN apt-get install -y nodejs
+
+# installing mongodb
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+RUN apt-get update
+RUN apt-get install -y mongodb-org
+
+WORKDIR /app
+RUN npm install --save-dev webpack
+RUN npm install -g typescript
+RUN npm install vue
+RUN npm install express
